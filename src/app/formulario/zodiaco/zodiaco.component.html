@@ -1,0 +1,95 @@
+
+<div class="flex flex-row justify-between bg-white shadow-md rounded-lg overflow-hidden p-6">
+  <div class="w-full max-w-lg mx-auto">
+    <form [formGroup]="formGroup" class="bg-gray-50 p-6 rounded-lg shadow-md" (ngSubmit)="onSubmit()">
+      
+      <!-- Nombre -->
+      <div class="mb-6">
+        <label for="nombre" class="block mb-2 text-sm font-semibold text-pink-600">Nombre</label>
+        <input type="text" id="nombre" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+        placeholder="Ingrese su nombre" formControlName="nombre" />
+      </div>
+  
+      <!-- Apellido Paterno -->
+      <div class="mb-6">
+        <label for="apaterno" class="block mb-2 text-sm font-semibold text-pink-600">Apellido Paterno</label>
+        <input type="text" id="apaterno" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+        placeholder="Ingrese su apellido" formControlName="apaterno" />
+      </div>
+  
+      <!-- Apellido Materno -->
+      <div class="mb-6">
+        <label for="amaterno" class="block mb-2 text-sm font-semibold text-pink-600">Apellido Materno</label>
+        <input type="text" id="amaterno" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+        placeholder="Ingrese su apellido" formControlName="amaterno" />
+      </div>
+  
+      <!-- Fecha de Nacimiento -->
+      <div class="mb-6">
+        <h1 class="text-sm font-semibold text-pink-600 mb-3">Fecha de nacimiento</h1>
+        
+        <div class="grid grid-cols-3 gap-4">
+          <!-- Día -->
+          <div>
+            <label for="dia" class="block text-sm font-semibold text-pink-600">Día</label>
+            <input type="number" max="31" id="dia" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+            placeholder="Día" formControlName="dia" />
+          </div>
+  
+          <!-- Mes -->
+          <div>
+            <label for="mes" class="block text-sm font-semibold text-pink-600">Mes</label>
+            <input type="number" min="1" max="12" id="mes" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+            placeholder="Mes" formControlName="mes" />
+          </div>
+  
+          <!-- Año -->
+          <div>
+            <label for="year" class="block text-sm font-semibold text-pink-600">Año</label>
+            <input type="number" min="1984" id="year" class="bg-white border border-pink-300 text-gray-700 text-sm rounded-full focus:ring-pink-500 focus:border-pink-500 block w-full p-3 transition-all duration-300"
+            placeholder="Año" formControlName="year" />
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sexo -->
+      <div class="mb-6">
+        <h1 class="text-sm font-semibold text-pink-600 mb-3">Sexo</h1>
+        
+        <!-- Hombre -->
+        <div class="flex items-center mb-3">
+          <input id="hombre" formControlName="sexo" type="radio" name="sexo" value="hombre" class="w-4 h-4 text-pink-600 bg-pink-100 border-pink-300 focus:ring-pink-500" />
+          <label for="hombre" class="ml-3 text-sm text-gray-700">Hombre</label>
+        </div>
+        
+        <!-- Mujer -->
+        <div class="flex items-center">
+          <input id="mujer" formControlName="sexo" type="radio" name="sexo" value="mujer" class="w-4 h-4 text-pink-600 bg-pink-100 border-pink-300 focus:ring-pink-500" />
+          <label for="mujer" class="ml-3 text-sm text-gray-700">Mujer</label>
+        </div>
+      </div>
+  
+      <!-- Botón de enviar -->
+      <button type="submit" class="w-full text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-pink-300 font-semibold rounded-full text-sm px-6 py-3 transition-all duration-300">
+        Enviar
+      </button>
+    </form>
+  </div>
+</div>
+<div class="flex flex-row justify-between bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg shadow-lg">
+  <!-- Zodiacal (izquierda) -->
+  <div class="w-full p-4">
+    <h2 class="text-2xl font-bold mb-4 tracking-wide uppercase border-b-4 border-yellow-400 pb-2">Zodiaco Chino</h2>
+    
+    <p class="mb-2 text-lg font-semibold italic">¡Hola, <span class="text-yellow-300">{{ nombreCompleto }}</span>!</p>
+    <p class="mb-2 text-lg">Naciste en: <span class="font-bold">{{ clientes.year }}</span></p>
+    <p class="mb-2 text-lg">Tienes <span class="font-bold">{{ edad }}</span> años</p>
+    <p class="mb-4 text-lg">Tu signo zodiacal chino es: <span class="text-yellow-300 font-bold text-2xl">{{ signoZodiacal }}</span></p>
+    
+    <div class="flex justify-center mt-4">
+      <img [src]="imagenSigno" alt="{{ signoZodiacal }}" class="w-48 h-48 rounded-full border-4 border-yellow-300 shadow-md transition-transform transform hover:scale-110 duration-300" />
+    </div>
+  </div>
+</div>
+
+
