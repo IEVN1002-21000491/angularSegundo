@@ -1,0 +1,103 @@
+
+<div class="flex max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200 space-x-8">
+
+    <div class="w-1/2">
+      <div *ngIf="successMessage" class="p-4 mb-4 text-sm text-pink-700 rounded-lg bg-pink-100" role="alert">
+        <span class="font-semibold"></span> {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="p-4 mb-4 text-sm text-purple-700 rounded-lg bg-purple-100" role="alert">
+        <span class="font-semibold"></span> {{ errorMessage }}
+      </div>
+  
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="mb-6">
+          <label for="matricula" class="block mb-2 text-sm font-medium text-purple-800">Matrícula:</label>
+          <input type="text" id="matricula" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 transition-colors duration-300 ease-in-out" 
+          placeholder="Ingrese su matrícula" formControlName="matricula" />
+        </div>
+        <div class="mb-6">
+          <label for="nombre" class="block mb-2 text-sm font-medium text-purple-800">Nombre:</label>
+          <input type="text" id="nombre" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 transition-colors duration-300 ease-in-out" 
+          placeholder="Ingrese su nombre" formControlName="nombre" />
+        </div>
+        <div class="mb-6">
+          <label for="email" class="block mb-2 text-sm font-medium text-purple-800">Correo:</label>
+          <input type="email" id="email" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 transition-colors duration-300 ease-in-out" 
+          placeholder="Ingrese su correo" formControlName="email" />
+        </div>
+        <div class="mb-6">
+          <label for="edad" class="block mb-2 text-sm font-medium text-purple-800">Edad:</label>
+          <input type="number" id="edad" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 transition-colors duration-300 ease-in-out" 
+          placeholder="Ingrese su edad" formControlName="edad" />
+        </div>
+        <div class="mb-6">
+          <label for="horas" class="block mb-2 text-sm font-medium text-purple-800">Horas trabajadas:</label>
+          <input type="number" id="horas" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 transition-colors duration-300 ease-in-out" 
+          placeholder="Ingrese las horas trabajadas" formControlName="horas" />
+        </div>
+        <div class="flex justify-between items-center">
+          <button type="submit" class="text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-48 py-2.5 transition-colors duration-300 ease-in-out">
+            Registrar
+          </button>
+          
+          <button (click)="mostrarTabla = !mostrarTabla" class="text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-48 py-2.5 transition-colors duration-300 ease-in-out">
+            Imprimir
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="w-1/2">
+      <div *ngIf="mostrarTabla">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs text-gray-800 uppercase bg-pink-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Matrícula</th>
+                <th scope="col" class="px-6 py-3">Nombre</th>
+                <th scope="col" class="px-6 py-3">Correo</th>
+                <th scope="col" class="px-6 py-3">Edad</th>
+                <th scope="col" class="px-6 py-3">Horas trabajadas</th>
+                <th scope="col" class="px-6 py-3">Pago normal</th>
+                <th scope="col" class="px-6 py-3">Pago extra</th>
+                <th scope="col" class="px-6 py-3">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let empleado of empleados" class="border-b hover:bg-pink-50">
+                <td class="px-6 py-4">{{ empleado.matricula }}</td>
+                <td class="px-6 py-4">{{ empleado.nombre }}</td>
+                <td class="px-6 py-4">{{ empleado.email }}</td>
+                <td class="px-6 py-4">{{ empleado.edad }}</td>
+                <td class="px-6 py-4">{{ empleado.horas }}</td>
+                <td class="px-6 py-4">{{ calcularPagoNormal(empleado.horas) | currency }}</td>
+                <td class="px-6 py-4">{{ calcularPagoExtra(empleado.horas) | currency }}</td>
+                <td class="px-6 py-4">{{ (calcularPagoNormal(empleado.horas) + calcularPagoExtra(empleado.horas)) | currency }}</td>
+              </tr>
+            </tbody>
+            <tfoot class="bg-pink-50">
+              <tr>
+                <th scope="col" colspan="7" class="px-6 py-3 text-right">Total de pagos:</th>
+                <td class="px-6 py-3">{{ totalPagos }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+  
+          <div class="mt-6 space-y-4">
+            <div class="flex items-center space-x-4">
+              <label for="matriculaModificar" class="block text-sm font-medium text-purple-800">Ingresar matrícula para modificar:</label>
+              <input type="text" id="matriculaModificar" [(ngModel)]="matriculaModificar" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg w-64 p-2.5 transition-colors duration-300 ease-in-out" placeholder="Ingrese la matrícula" />
+              <button (click)="buscarEmpleadoPorMatricula()" class="bg-purple-700 text-white px-4 py-2.5 rounded hover:bg-purple-800 transition-colors duration-300 ease-in-out">Modificar</button>
+            </div>
+            <div class="flex items-center space-x-4">
+              <label for="matriculaEliminar" class="block text-sm font-medium text-purple-800">Ingresar matrícula para eliminar:</label>
+              <input type="text" id="matriculaEliminar" [(ngModel)]="matriculaEliminar" class="bg-pink-50 border border-pink-300 text-purple-800 rounded-lg w-64 p-2.5 transition-colors duration-300 ease-in-out" placeholder="Ingrese la matrícula" />
+              <button (click)="eliminarEmpleadoPorMatricula()" class="bg-red-600 text-white px-4 py-2.5 rounded hover:bg-red-700 transition-colors duration-300 ease-in-out">Eliminar</button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+  
